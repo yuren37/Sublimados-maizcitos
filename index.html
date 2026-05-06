@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <title>Sublimados Maizcitos — Personalizados</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&family=Nunito:wght@300;400;600;700;800&display=swap"
+        rel="stylesheet" />
+    <style>
+        :root {
+            --bg:             #fff9ed;
+            --bg2:            #fff3d6;
+            --card:           #ffffff;
+            --border:         #ffe0a3;
+            --yellow:         #ffb800;
+            --yellow-lt:      #ffd166;
+            --orange:         #ff7b42;
+            --pink:           #ff6b8a;
+            --blue:           #5cc9e8;
+            --green:          #6bcb77;
+            --purple:         #b388eb;
+            --text:           #3d2c1e;
+            --muted:          #7a6a58;
+            --radius-sm:      16px;
+            --radius:         24px;
+            --radius-xl:      32px;
+            --nav-h:          64px;
+            --bot-h:          72px;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Nunito', sans-serif;
+            font-weight: 400;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        a { color: inherit; text-decoration: none; }
+        img { display: block; width: 100%; object-fit: cover; }
+        button { cursor: pointer; font-family: inherit; border: none; outline: none; }
+
+        /* ─── TOP NAV ─── */
+        #top-nav {
+            position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h);
+            background: rgba(255, 249, 237, 0.94);
+            backdrop-filter: blur(20px);
+            border-bottom: 2px solid var(--border);
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 20px; z-index: 900;
+        }
+        .nav-logo-area {
+            display: flex; align-items: center; gap: 10px;
+            cursor: pointer; user-select: none;
+        }
+        .nav-logo-img {
+            width: 42px; height: 42px; border-radius: 50%;
+            overflow: hidden; flex-shrink: 0;
+            background: linear-gradient(135deg, var(--yellow), var(--orange));
+            border: 3px solid var(--yellow);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 24px; color: #fff;
+            box-shadow: 0 2px 8px rgba(255, 184, 0, 0.3);
+        }
+        .nav-logo-img img { width: 100%; height: 100%; object-fit: cover; }
+        .nav-logo-text { display: flex; flex-direction: column; line-height: 1.1; }
+        .nav-logo-text span:first-child {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 18px; font-weight: 700; color: var(--orange);
+            letter-spacing: -0.5px;
+        }
+        .nav-logo-text span:last-child {
+            font-size: 9px; letter-spacing: 2px; color: var(--muted);
+            text-transform: uppercase; font-weight: 600;
+        }
+        .nav-right { display: flex; align-items: center; gap: 8px; }
+        .nav-btn-shop {
+            background: linear-gradient(135deg, var(--orange), #ff5e2c);
+            color: #fff; font-size: 13px; font-weight: 700;
+            letter-spacing: 0.5px; padding: 10px 20px;
+            border-radius: 100px; box-shadow: 0 4px 15px rgba(255, 123, 66, 0.35);
+            transition: transform 0.15s, box-shadow 0.2s;
+        }
+        .nav-btn-shop:active { transform: scale(0.95); }
+
+        /* ─── BOTTOM NAV ─── */
+        #bottom-nav {
+            position: fixed; bottom: 0; left: 0; right: 0; height: var(--bot-h);
+            background: rgba(255, 249, 237, 0.97);
+            backdrop-filter: blur(20px);
+            border-top: 2px solid var(--border);
+            display: flex; justify-content: space-around; align-items: center;
+            padding-bottom: env(safe-area-inset-bottom, 0); z-index: 900;
+        }
+        .bnav-item {
+            display: flex; flex-direction: column; align-items: center; gap: 5px;
+            flex: 1; padding: 8px 4px; cursor: pointer; transition: color 0.2s;
+            color: var(--muted); font-size: 11px; font-weight: 700;
+            letter-spacing: 0.5px; text-transform: uppercase;
+        }
+        .bnav-item.active { color: var(--orange); }
+        .bnav-item svg { width: 24px; height: 24px; stroke-width: 2; }
+
+        /* ─── PAGES ─── */
+        .page {
+            display: none; min-height: 100vh;
+            padding-top: var(--nav-h);
+            padding-bottom: calc(var(--bot-h) + 16px);
+        }
+        .page.active { display: block; }
+
+        /* ══════════════════════════════════════
+           HOME PAGE
+        ══════════════════════════════════════ */
+
+        /* HERO */
+        .hero {
+            position: relative;
+            min-height: calc(100svh - var(--nav-h));
+            background: linear-gradient(170deg, #fff9ed 0%, #fff3d6 30%, #ffe8b8 60%, #ffecd2 100%);
+            display: flex; align-items: center; justify-content: center;
+            overflow: hidden;
+        }
+        .hero-bg-pattern {
+            position: absolute; inset: 0; pointer-events: none;
+            opacity: 0.25;
+            background: radial-gradient(circle at 20% 30%, var(--pink) 0%, transparent 35%),
+                        radial-gradient(circle at 80% 60%, var(--blue) 0%, transparent 35%),
+                        radial-gradient(circle at 50% 80%, var(--yellow) 0%, transparent 35%),
+                        radial-gradient(circle at 10% 80%, var(--purple) 0%, transparent 30%),
+                        radial-gradient(circle at 85% 15%, var(--green) 0%, transparent 30%);
+        }
+        .hero-dots {
+            position: absolute; inset: 0; pointer-events: none;
+            background-image: radial-gradient(var(--orange) 1.5px, transparent 1.5px);
+            background-size: 24px 24px; opacity: 0.12;
+        }
+        .hero-content {
+            position: relative; z-index: 2;
+            text-align: center; padding: 40px 24px;
+            display: flex; flex-direction: column; align-items: center; gap: 18px;
+            max-width: 420px;
+        }
+        .hero-emoji {
+            font-size: 56px; line-height: 1;
+            animation: bounce 2s ease-in-out infinite;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: #fff; border: 2px solid var(--yellow);
+            padding: 8px 18px; border-radius: 100px;
+            font-size: 12px; font-weight: 700; color: var(--orange);
+            letter-spacing: 1px; text-transform: uppercase;
+            box-shadow: 0 4px 12px rgba(255, 184, 0, 0.2);
+        }
+        .hero-badge::before {
+            content: '✨'; font-size: 14px;
+        }
+        .hero-title {
+            font-family: 'Fredoka', sans-serif;
+            font-size: clamp(40px, 11vw, 56px);
+            font-weight: 700; line-height: 1.05;
+            letter-spacing: -1.5px;
+        }
+        .hero-title .hl {
+            position: relative; display: inline-block;
+            color: var(--orange);
+        }
+        .hero-title .hl::after {
+            content: '';
+            position: absolute; bottom: 2px; left: 0; right: 0;
+            height: 10px; background: rgba(255, 184, 0, 0.35);
+            border-radius: 4px; z-index: -1;
+        }
+        .hero-sub {
+            font-size: 15px; color: var(--muted); line-height: 1.6;
+            font-weight: 500; max-width: 320px;
+        }
+        .hero-cta {
+            display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--orange), #ff5e2c);
+            color: #fff; font-size: 14px; font-weight: 700;
+            letter-spacing: 0.5px; padding: 15px 30px;
+            border-radius: 100px;
+            box-shadow: 0 6px 20px rgba(255, 123, 66, 0.4);
+            transition: transform 0.15s, box-shadow 0.2s;
+        }
+        .btn-primary:active { transform: scale(0.95); }
+        .btn-outline {
+            background: #fff; border: 2px solid var(--orange);
+            color: var(--orange); font-size: 14px; font-weight: 700;
+            letter-spacing: 0.5px; padding: 15px 28px;
+            border-radius: 100px; transition: background 0.2s, color 0.2s;
+        }
+        .btn-outline:active { background: var(--orange); color: #fff; }
+
+        /* SCROLL INDICATOR */
+        .scroll-indicator {
+            position: absolute; bottom: 20px; left: 50%;
+            transform: translateX(-50%); z-index: 2;
+            display: flex; flex-direction: column; align-items: center; gap: 4px;
+            color: var(--muted); font-size: 10px; font-weight: 700;
+            letter-spacing: 1px; text-transform: uppercase;
+            animation: float 2s ease-in-out infinite;
+        }
+        .scroll-indicator svg { width: 20px; height: 20px; opacity: 0.6; }
+        @keyframes float {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(6px); }
+        }
+
+        /* FEATURED PRODUCTS */
+        .featured-section { padding: 50px 20px; }
+        .section-badge {
+            display: inline-flex; align-items: center; gap: 6px;
+            font-size: 11px; font-weight: 700; letter-spacing: 2px;
+            color: var(--orange); text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+        .section-title {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 32px; font-weight: 700; line-height: 1.1;
+            margin-bottom: 28px; letter-spacing: -1px;
+        }
+        .section-title .emoji { font-size: 28px; }
+        .featured-grid {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+        .featured-card {
+            background: #fff; border: 2px solid var(--border);
+            border-radius: var(--radius); overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+        }
+        .featured-card:active {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+        }
+        .featured-img {
+            height: 150px; overflow: hidden;
+            background: linear-gradient(135deg, #fff3d6, #ffe8b8);
+            position: relative;
+        }
+        .featured-img img { height: 100%; object-fit: cover; }
+        .featured-img-placeholder {
+            height: 100%; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; gap: 6px;
+            color: var(--muted); font-size: 12px; font-weight: 600;
+        }
+        .featured-img-placeholder svg { width: 32px; height: 32px; opacity: 0.4; }
+        .featured-body { padding: 14px; }
+        .featured-name {
+            font-size: 14px; font-weight: 700; margin-bottom: 6px;
+            line-height: 1.2; color: var(--text);
+        }
+        .featured-price {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 22px; font-weight: 700; color: var(--orange);
+        }
+        .featured-price small { font-size: 13px; font-weight: 500; color: var(--muted); margin-left: 2px; }
+
+        /* ABOUT */
+        .about {
+            margin: 0 20px 50px;
+            background: #fff; border: 2px solid var(--border);
+            border-radius: var(--radius-xl); padding: 28px 24px;
+            position: relative; overflow: hidden;
+        }
+        .about::before {
+            content: '';
+            position: absolute; top: -30px; right: -30px;
+            width: 80px; height: 80px; border-radius: 50%;
+            background: rgba(255, 184, 0, 0.15); z-index: 0;
+        }
+        .about-content { position: relative; z-index: 1; }
+        .about-emoji { font-size: 32px; margin-bottom: 8px; }
+        .about-title {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 22px; font-weight: 700; margin-bottom: 10px;
+        }
+        .about-body {
+            font-size: 14px; line-height: 1.7; color: var(--muted);
+            font-weight: 500;
+        }
+
+        /* PRODUCTS BANNER */
+        .products-banner {
+            margin: 0 20px 50px;
+            background: linear-gradient(135deg, var(--yellow), #ffb300);
+            border-radius: var(--radius-xl); padding: 32px 24px;
+            text-align: center; position: relative; overflow: hidden;
+        }
+        .products-banner::after {
+            content: '🎨';
+            position: absolute; top: -15px; right: 10px;
+            font-size: 60px; opacity: 0.3; transform: rotate(15deg);
+        }
+        .banner-title {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 26px; font-weight: 700; color: #fff;
+            margin-bottom: 10px; position: relative; z-index: 1;
+        }
+        .banner-sub {
+            font-size: 14px; color: rgba(255,255,255,0.9); font-weight: 600;
+            margin-bottom: 20px; position: relative; z-index: 1;
+        }
+        .btn-white {
+            background: #fff; color: var(--orange);
+            font-size: 14px; font-weight: 700; letter-spacing: 0.5px;
+            padding: 14px 30px; border-radius: 100px;
+            display: inline-flex; align-items: center; gap: 8px;
+            position: relative; z-index: 1;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.15s;
+        }
+        .btn-white:active { transform: scale(0.95); }
+
+        /* ══════════════════════════════════════
+           STORE PAGE
+        ══════════════════════════════════════ */
+        #page-store { padding-top: calc(var(--nav-h) + 0px); }
+        .store-iframe-wrapper {
+            position: relative; width: 100%;
+            height: calc(100svh - var(--nav-h) - var(--bot-h));
+            background: #fff; border-radius: 0; overflow: hidden;
+        }
+        .store-iframe-wrapper iframe {
+            width: 100%; height: 100%; border: none;
+        }
+        .store-back-bar {
+            display: flex; align-items: center; gap: 10px;
+            padding: 10px 16px; background: #fff;
+            border-bottom: 2px solid var(--border);
+            position: sticky; top: var(--nav-h); z-index: 5;
+        }
+        .btn-back-store {
+            background: var(--bg); border: 2px solid var(--border);
+            color: var(--text); font-size: 12px; font-weight: 700;
+            padding: 9px 18px; border-radius: 100px;
+            display: flex; align-items: center; gap: 6px;
+            cursor: pointer; transition: border-color 0.2s;
+        }
+        .btn-back-store:hover { border-color: var(--orange); }
+        .store-external-link {
+            margin-left: auto; font-size: 12px; color: var(--orange);
+            font-weight: 700; display: flex; align-items: center; gap: 4px;
+        }
+
+        .toast {
+            position: fixed; bottom: calc(var(--bot-h) + 12px); left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: #fff; border: 2px solid var(--border);
+            color: var(--text); font-size: 13px; font-weight: 600;
+            padding: 12px 20px; border-radius: 100px;
+            opacity: 0; transition: opacity 0.3s, transform 0.3s;
+            pointer-events: none; z-index: 9998; white-space: nowrap;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+        }
+        .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+        .toast.success { border-color: var(--green); color: var(--green); }
+
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+    </style>
+</head>
+<body>
+
+    <!-- ─── TOP NAV ─── -->
+    <nav id="top-nav">
+        <div class="nav-logo-area">
+            <div class="nav-logo-img">
+                <span>🌽</span>
+            </div>
+            <div class="nav-logo-text">
+                <span>Sublimados Maizcitos</span>
+                <span>Personalizados</span>
+            </div>
+        </div>
+        <div class="nav-right">
+            <button class="nav-btn-shop" onclick="showPage('store')">Tienda</button>
+        </div>
+    </nav>
+
+    <!-- ─── BOTTOM NAV ─── -->
+    <div id="bottom-nav">
+        <div class="bnav-item active" id="bnav-home" onclick="showPage('home')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            Inicio
+        </div>
+        <div class="bnav-item" id="bnav-store" onclick="showPage('store')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+            Tienda
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <!-- ═══════════════════════════
+     PAGE: HOME
+    ═══════════════════════════ -->
+    <div class="page active" id="page-home">
+
+        <!-- Hero -->
+        <div class="hero">
+            <div class="hero-bg-pattern"></div>
+            <div class="hero-dots"></div>
+            <div class="hero-content">
+                <div class="hero-emoji">🌽✨</div>
+                <div class="hero-badge">Sublimación Creativa</div>
+                <h1 class="hero-title">
+                    Tus ideas<br /><span class="hl">cobran vida</span>
+                </h1>
+                <p class="hero-sub">Tazas, camisas, gorras, botes y todo lo que imagines. ¡Diseños únicos o personalizados a tu gusto! 🎨</p>
+                <div class="hero-cta">
+                    <button class="btn-primary" onclick="showPage('store')">🛍️ Ver Tienda</button>
+                    <button class="btn-outline" onclick="window.open('https://wa.me/50432908257?text=Hola%20Sublimados%20Maizcitos!', '_blank')">💬 WhatsApp</button>
+                </div>
+            </div>
+            <div class="scroll-indicator">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="7 10 12 15 17 10"/></svg>
+                baja para ver más
+            </div>
+        </div>
+
+        <!-- Featured Products -->
+        <div class="featured-section">
+            <div class="section-badge">🔥 Lo más pedido</div>
+            <h2 class="section-title">Productos <span class="emoji">estrella</span></h2>
+            <div class="featured-grid" id="featured-grid"></div>
+        </div>
+
+        <!-- About -->
+        <div class="about">
+            <div class="about-content">
+                <div class="about-emoji">👋</div>
+                <h3 class="about-title">¿Quiénes somos?</h3>
+                <p class="about-body">
+                    Somos <strong>Sublimados Maizcitos</strong>, un pequeño negocio con grandes ideas. Nos encanta plasmar tu personalidad en cada producto: desde la taza que tomas cada mañana hasta la camisa que estrenas el finde.<br /><br />
+                    🎯 ¿No tienes diseño? ¡Nosotros te ayudamos!<br />
+                    🚀 Entrega rápida y calidad 100% garantizada.
+                </p>
+            </div>
+        </div>
+
+        <!-- Call to Action Banner -->
+        <div class="products-banner">
+            <h3 class="banner-title">¿Listo para crear algo increíble?</h3>
+            <p class="banner-sub">Mira todos nuestros productos y diseños disponibles</p>
+            <button class="btn-white" onclick="showPage('store')">
+                Ir a la Tienda 🛒
+            </button>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════
+     PAGE: STORE
+    ═══════════════════════════ -->
+    <div class="page" id="page-store">
+        <div class="store-back-bar">
+            <button class="btn-back-store" onclick="showPage('home')">
+                ← Volver
+            </button>
+            <a class="store-external-link" href="https://catalogo.treinta.co/sublimadosmaizcitos" target="_blank" rel="noopener">
+                Abrir en pestaña nueva ↗
+            </a>
+        </div>
+        <div class="store-iframe-wrapper">
+            <iframe
+            src="https://catalogo.treinta.co/sublimadosmaizcitos"
+            title="Tienda Sublimados Maizcitos"
+            allow="payment"
+            loading="lazy"
+            sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-top-navigation">
+        </iframe>
+    </div>
+</div>
+
+<script>
+    const featuredProducts = [
+        { name: 'Taza Personalizada', price: 120, img: 'taza.jpg' },
+        { name: 'Gorra Sublimada', price: 250, img: 'gorRras.jpg' },
+        { name: 'Camisa Blanca', price: 250, img: '1.5.jpeg' },
+        { name: 'Camisa Negra', price: 300, img: '2.7.png' },
+        { name: 'Bote de Agua', price: 250, img: 'bote blanco.png' },
+        { name: 'Rompecabezas', price: 300, img: 'rompecabezas.png' },
+    ];
+
+    function showPage(id) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.querySelectorAll('.bnav-item').forEach(b => b.classList.remove('active'));
+        const pageEl = document.getElementById('page-' + id);
+        if (pageEl) pageEl.classList.add('active');
+        const bn = document.getElementById('bnav-' + id);
+        if (bn) bn.classList.add('active');
+        window.scrollTo(0, 0);
+        if (id === 'home') renderFeatured();
+    }
+
+    function renderFeatured() {
+        const el = document.getElementById('featured-grid');
+        el.innerHTML = featuredProducts.map(p => `
+        <div class="featured-card" onclick="showPage('store')">
+        <div class="featured-img">
+        ${p.img ? `<img src="${p.img}" alt="${p.name}" loading="lazy"/>` : `<div class="featured-img-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Sin imagen</span></div>`}
+        </div>
+        <div class="featured-body">
+        <div class="featured-name">${p.name}</div>
+        <div class="featured-price">L. ${p.price} <small>c/u</small></div>
+        </div>
+        </div>
+        `).join('');
+    }
+
+    let toastTimeout;
+    function showToast(msg, type = '') {
+        const t = document.getElementById('toast');
+        t.textContent = msg; t.className = 'toast ' + type;
+        clearTimeout(toastTimeout);
+        requestAnimationFrame(() => { t.classList.add('show'); });
+        toastTimeout = setTimeout(() => { t.classList.remove('show'); }, 2800);
+    }
+
+    renderFeatured();
+</script>
+</body>
+</html>
